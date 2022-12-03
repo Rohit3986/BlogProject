@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>Home</title>
+</head>
+<style>
+    a:hover {
+        font-style: italic;
+        border-radius: 90px;
+        background-color: rgb(108, 0, 241);
+    }
+    
+    .bc:hover {
+        color: red
+    }
+</style>
+
+<body style="background-color: rgb(37, 36, 36);">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <nav style="background-color:rgb(48, 46, 54);height:40%" class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <span class="navbar-brand bc">BlogSpot</span>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'p_blog' %}">Home</a>
+                    </li>
+                    <li class=" nav-item ">
+                        <a class="nav-link active " aria-current="page " href="{% url 'profile' %} ">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active " href="# ">My Posts</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link active " href="{% url 'create_post' %}">Post Something</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link active " href="{% url 'fetch_news' %}">Daily Booster</a>
+                    </li>
+
+                </ul>
+                <form class="d-flex ">
+                    <a href="{% url 'lgout' %} " class="btn btn-primary ">Logout</a>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <span style="color: white;">{% if messages %}{% for message in messages %}{{message}}{% endfor %}{% endif %}</span><br>{% for data in form %}
+    <div class="card" style="height: 50%;width: 80%;background-color: rgb(51, 49, 47);margin-left: 10%;padding-left: 20%;border-style: groove;padding: 2%;color: rgb(255, 255, 255);border-color: black;box-shadow: 109%; ">
+        <div class="card-header" style="color:rgb(255, 255, 255)">
+            {{data.category}} </div>
+        <div class="card-body">
+            <blockquote class="blockquote mb-0">
+                <h3 style="background-color: rgb(53, 58, 53);">{{data.title}}</h3>
+                <p>{{data.description}}</p>
+                <footer class="blockquote-footer">posted by <cite title="Source Title">{% if data.user.id == user.id %}you{% else %}{{data.user.username}}{% endif %}</cite></footer>
+            </blockquote>
+            {% if data.user.id == user.id %}<a class="btn btn-success" href="{% url 'edit_blog' data.id %}" role="button">Edit</a> <a class="btn btn-danger" href="{% url 'delete_blog' data.id %}" role="button">delete</a>{% endif %}
+        </div>
+    </div><br>{% endfor %}
+
+
+</body>
+
+</html>

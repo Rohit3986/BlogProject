@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"> {% load static%}
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>Document</title>
+</head>
+<style>
+    a:hover {
+        font-style: italic;
+        border-radius: 90px;
+        background-color: rgb(108, 0, 241);
+    }
+    
+    input[type=text],
+    select,
+    textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid rgb(107, 104, 104);
+        border-radius: 4px;
+        resize: vertical;
+        color: white;
+        background-color: rgb(71, 69, 65)
+    }
+    
+    label {
+        padding: 12px 12px 12px 0;
+        display: inline-block;
+        color: white;
+    }
+</style>
+
+<body style="background-color: rgb(37, 36, 36);">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <nav style="background-color:rgb(48, 46, 54);height:40%" class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <span class="navbar-brand">BlogSpot</span>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'p_blog' %}">Home</a>
+                    </li>
+                    <li class=" nav-item ">
+                        <a class="nav-link active " aria-current="page " href="/home/profile/">Profile</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link active " href="# ">My Posts</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link active " href="/home/create_post/ ">Post Something</a>
+                    </li>
+
+                </ul>
+                <form class="d-flex ">
+                    <a href="{% url 'lgout' %} " class="btn btn-primary ">Logout</a>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <span style="color: white;">{% if messages %}{% for message in messages %}{{message}}{% endfor %}{% endif %}</span>
+    <div style="background-color: rgb(46, 46, 52);width: 50%;margin-left: 25%;margin-top: 2%;border-style: double;padding: 2%;">
+        <form action="/home/edit_blog/{{id}}" method="POST" novalidate>
+            {% csrf_token %} {{res.non_error_field}} {% for field in form %}
+            <p>{{field.label_tag}} {{field}}<br> {% if field.errors %} <span style="color: red;font-size: 30px;">{% for error in field.errors %}
+                {{error}}<br>
+            {% endfor %}</span>{% endif %}
+            </p> {% endfor %} <button style="margin-left: 40%;font-size: 26px;" class="btn btn-primary" type="submit">Post</button>
+        </form>
+    </div>
+
+</body>
+
+</html>
